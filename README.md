@@ -21,6 +21,20 @@ rq.url = "http://httpbin.org/post"
 local b,c,h = H(rq)
 ```
 
+## to return response
+```lua
+local mp = (require "multipart-post").gen_request
+local H = (require "socket.http").request
+local rq = mp{myfile = {name = "myfilename", data = "some data"}}
+rq.url = "http://httpbin.org/post"
+local res = {}
+rq.sink = (require "ltn12").sink.table(res)
+local b,c,h = H(rq)
+-- response is res
+print(table.concat(res))
+```
+
+
 See [LuaSocket](http://w3.impa.br/~diego/software/luasocket/http.html)'s
 `http.request` (generic interface) for more information.
 
